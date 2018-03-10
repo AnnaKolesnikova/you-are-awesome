@@ -1,10 +1,27 @@
 // DO WHATEVER YOU WANT HERE
+Object.keys(this);
+for (const key in this) {
+  const object = this;
+  Object.defineProperty(this, propertyName, {
+    enumerable: false,
+    configurable: true
+  });
+}
+
+
+
 
 const createEnumerableProperty = (propertyName) => {
+    return propertyName;
+};
+const createNotEnumerableProperty = (propertyName) => {
   return propertyName;
 };
-const createNotEnumerableProperty = () => {};
-const createProtoMagicObject = () => {};
+const createProtoMagicObject = () => {
+  const meow = () => {};
+    meow.prototype = meow.__proto__;
+    return meow;
+};
 const incrementor = () => {};
 const asyncIncrementor = () => {};
 const createIncrementer = () => {};
