@@ -1,45 +1,71 @@
-// DO WHATEVER YOU WANT HERE
-
 const createEnumerableProperty = (propertyName) => {
-    return propertyName;
+  return propertyName;
 };
 const createNotEnumerableProperty = (propertyName) => {
-// for (const key in object) {
-//     const object = this;
-//     Object.defineProperty(object, propertyName, {
-//       enumerable: false,
-//       configurable: true
-//     });
-//   }
   return Symbol(propertyName);
 };
 const createProtoMagicObject = () => {
-  const func = () => {};
-    func.prototype = func.__proto__;
-    return func;
+  const func = () => { };
+  func.prototype = func.__proto__;
+  return func;
 };
 
-let count = 0;
-const incrementor = () => {
-  count++;
+let v = 0;
+function incrementor() {
+  v++;
+  return incrementor;
+}
+incrementor.valueOf = () => v;
+
+let av = 0;
+function asyncIncrementor() {
+  return new Promise(resolve => {
+    av++;
+    resolve(av);
+  });
+}
+
+function* createIncrementer() {
+  let v = 1;
+  while (true) {
+    yield v++;
+  }
+}
+
+function returnBackInSecond(param) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(param), 1000);
+  });
+}
+
+function getDeepPropertiesCount(obj) {
+  const keys = Object.keys(obj);
+  let count = keys.length;
+  keys.forEach(key => {
+    const prop = obj[key];
+    if (typeof prop === 'object' && prop !== null) {
+      count += getDeepPropertiesCount(prop);
+    }
+  });
+  return count;
+}
+
+function createSerializedObject() {
+  return null;
+}
+
+function sortByProto(arr) {
+  return arr;
+}
+
+module.exports = {createEnumerableProperty,
+  createNotEnumerableProperty,
+  createProtoMagicObject,
+  incrementor,
+  asyncIncrementor,
+  createIncrementer,
+  returnBackInSecond,
+  getDeepPropertiesCount,
+  createSerializedObject,
+  sortByProto,
 };
-const asyncIncrementor = () => {};
-const createIncrementer = () => {};
-
-// return same argument not earlier than in one second, and not later, than in two
-const returnBackInSecond = () => {};
-const getDeepPropertiesCount = () => {};
-const createSerializedObject = () => {};
-const toBuffer = () => {};
-const sortByProto = () => {};
-
-exports.createEnumerableProperty = createEnumerableProperty;
-exports.createNotEnumerableProperty = createNotEnumerableProperty;
-exports.createProtoMagicObject = createProtoMagicObject;
-exports.incrementor = incrementor;
-exports.asyncIncrementor = asyncIncrementor;
-exports.createIncrementer = createIncrementer;
-exports.returnBackInSecond = returnBackInSecond;
-exports.getDeepPropertiesCount = getDeepPropertiesCount;
-exports.createSerializedObject = createSerializedObject;
-exports.sortByProto = sortByProto;
